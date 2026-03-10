@@ -1,6 +1,8 @@
 
 import java.util.Scanner;
-public class UseCase4PalindromeCheckerApp {
+import java.util.Stack;
+
+public class UseCase5PalindromeCheckerApp {
     public static void main(String[] args) {
         System.out.println("Welcome to Palindrome Checker App Management System");
 
@@ -8,22 +10,20 @@ public class UseCase4PalindromeCheckerApp {
         System.out.print("Enter a word or phrase: ");
         String input = sc.nextLine();
 
-        char[] chars = input.toCharArray();
-
-        int left = 0;
-        int right = chars.length - 1;
-        boolean isPalindrome = true;
-
-        while (left < right) {
-            if (chars[left] != chars[right]) {
-                isPalindrome = false;
-                break;
-            }
-            left++;
-            right--;
+        // Push characters into stack
+        Stack<Character> stack = new Stack<>();
+        for (int i = 0; i < input.length(); i++) {
+            stack.push(input.charAt(i));
         }
 
-        if (isPalindrome) {
+        // Pop characters to build reversed string
+        String reversed = "";
+        while (!stack.isEmpty()) {
+            reversed += stack.pop();
+        }
+
+        // Compare original and reversed
+        if (input.equals(reversed)) {
             System.out.println("Result: \"" + input + "\" is a palindrome ✅");
         } else {
             System.out.println("Result: \"" + input + "\" is NOT a palindrome ❌");
