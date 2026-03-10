@@ -1,7 +1,7 @@
 
 import java.util.*;
 
-public class UseCase6PalindromeCheckerApp {
+public class UseCase7PalindromeCheckerApp {
     public static void main(String[] args) {
         System.out.println("Welcome to Palindrome Checker App Management System");
 
@@ -9,25 +9,20 @@ public class UseCase6PalindromeCheckerApp {
         System.out.print("Enter a word or phrase: ");
         String input = sc.nextLine();
 
-        // UC6 Logic: Use both Queue (FIFO) and Stack (LIFO)
-        Queue<Character> queue = new LinkedList<>();
-        Stack<Character> stack = new Stack<>();
-
-        // Enqueue and Push characters
+        // UC7 Logic: Insert characters into deque
+        Deque<Character> deque = new LinkedList<>();
         for (int i = 0; i < input.length(); i++) {
-            char ch = input.charAt(i);
-            queue.add(ch);   // enqueue
-            stack.push(ch);  // push
+            deque.addLast(input.charAt(i));  // insert at rear
         }
 
         boolean isPalindrome = true;
 
-        // Compare dequeue vs pop
-        while (!queue.isEmpty() && !stack.isEmpty()) {
-            char fromQueue = queue.remove(); // dequeue
-            char fromStack = stack.pop();    // pop
+        // Compare front and rear until empty
+        while (deque.size() > 1) {
+            char front = deque.removeFirst();
+            char rear = deque.removeLast();
 
-            if (fromQueue != fromStack) {
+            if (front != rear) {
                 isPalindrome = false;
                 break;
             }
@@ -43,4 +38,3 @@ public class UseCase6PalindromeCheckerApp {
         sc.close();
     }
 }
-
