@@ -1,52 +1,20 @@
 
 import java.util.Scanner;
 
-class Node {
-    char data;
-    Node next;
+public class UseCase9PalindromeCheckerApp {
 
-    Node(char data) {
-        this.data = data;
-        this.next = null;
-    }
-}
-
-public class UseCase8PalindromeCheckerApp {
-
-    // Function to check palindrome using linked list
-    public static boolean isPalindrome(Node head) {
-        if (head == null || head.next == null) return true;
-
-        // Step 1: Find middle using fast & slow pointers
-        Node slow = head;
-        Node fast = head;
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
+    // Recursive function to check palindrome
+    public static boolean isPalindrome(String str, int start, int end) {
+        // Base condition: if start >= end, it's a palindrome
+        if (start >= end) {
+            return true;
         }
-
-        // Step 2: Reverse second half
-        Node prev = null;
-        Node curr = slow;
-        while (curr != null) {
-            Node nextNode = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = nextNode;
+        // If mismatch found
+        if (str.charAt(start) != str.charAt(end)) {
+            return false;
         }
-
-        // Step 3: Compare first half and reversed second half
-        Node firstHalf = head;
-        Node secondHalf = prev;
-        while (secondHalf != null) {
-            if (firstHalf.data != secondHalf.data) {
-                return false;
-            }
-            firstHalf = firstHalf.next;
-            secondHalf = secondHalf.next;
-        }
-
-        return true;
+        // Recursive call: move inward
+        return isPalindrome(str, start + 1, end - 1);
     }
 
     public static void main(String[] args) {
@@ -56,22 +24,11 @@ public class UseCase8PalindromeCheckerApp {
         System.out.print("Enter a word or phrase: ");
         String input = sc.nextLine();
 
-        // Convert string to linked list
-        Node head = null;
-        Node tail = null;
-        for (int i = 0; i < input.length(); i++) {
-            Node newNode = new Node(input.charAt(i));
-            if (head == null) {
-                head = newNode;
-                tail = newNode;
-            } else {
-                tail.next = newNode;
-                tail = newNode;
-            }
-        }
+        // Call recursive function
+        boolean result = isPalindrome(input, 0, input.length() - 1);
 
-        // Check palindrome
-        if (isPalindrome(head)) {
+        // Print result
+        if (result) {
             System.out.println("Result: \"" + input + "\" is a palindrome ✅");
         } else {
             System.out.println("Result: \"" + input + "\" is NOT a palindrome ❌");
